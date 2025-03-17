@@ -1,11 +1,16 @@
-import math
+import json
+import matplotlib.pyplot as plt  
+def importJSON(stuff):
+    with open(stuff,'r') as file:
+        data = json.load(file)
+        return(data)
+file = importJSON('ListOfNumbers.json')
+
 
 def join(stuff):
     thingy = ''.join(stuff)
     return thingy
 
-#######################################
-#Code to construct the operations matrix for evaluating possible solutions
 matrix =[]
 
 def constructOperationsMatrix(n):
@@ -32,8 +37,6 @@ def constructOperationsMatrix(n):
     for i in range(0,(len(nCutList)+1)*(2**(nLen-2))):
         submatrix[i].insert((i % (len(nCutList)+1)),'==')
     return submatrix
-##########################
-
 #Test if given number is good or bad
 def testGoodBad(n): #input is any integer greater than 100
     nMatrix = constructOperationsMatrix(n)
@@ -55,8 +58,7 @@ def testGoodBad(n): #input is any integer greater than 100
         return True
     else:
         return False
-    #######################
-    #Function to visualize when the numbers turn good or bad
+#Function to visualize when the numbers turn good or bad
 startValue = 0
 def plotCumulativeSum(xMin,xMax,addWhat,subtractWhat,logYesNo):
     global startValue 
@@ -72,8 +74,7 @@ def plotCumulativeSum(xMin,xMax,addWhat,subtractWhat,logYesNo):
         startValue = startValue + addValue
         return startValue
         
-    import matplotlib.pyplot as plt  # Correct import
-    import math
+   
     # Ensure x is a list of integers
     x = list(range(xMin, xMax))
 
@@ -85,9 +86,9 @@ def plotCumulativeSum(xMin,xMax,addWhat,subtractWhat,logYesNo):
     plt.xlabel("x")
     if logYesNo == True:
         plt.xscale('log')
-    plt.title("True/False Cumulative Sum")
+    plt.title("Good/Bad Cumulative Sum")
     plt.grid(True)
     plt.legend()
     plt.show()
-    
-plotCumulativeSum(100,640000,2,-1,True)
+
+
